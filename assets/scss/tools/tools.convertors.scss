@@ -1,0 +1,4 @@
+@function toRem($value) {
+  $remValue: ($value / $global-font-size) + rem;
+  @return $remValue;
+}

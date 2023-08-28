@@ -1,0 +1,7 @@
+@function font-size($size) {
+  @return map-get(map-get($global-text-map, $size), font-size);
+}
+
+@function line-height($size) {
+  @return map-get(map-get($global-text-map, $size), line-height);
+}

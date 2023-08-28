@@ -1,0 +1,13 @@
+// 1. Settings
+@import './settings/settings.colors.scss';
+@import './settings/settings.indents.scss';
+@import './settings/settings.responsive.scss';
+@import './settings/settings.text.scss';
+
+// 2. Tools
+@import './tools/tools.colors.scss';
+@import './tools/tools.indents.scss';
+@import './tools/tools.mixins.scss';
+@import './tools/tools.text-gradient.scss';
+@import './tools/tools.text.scss';
+@import 'sass-mq/mq';

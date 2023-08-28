@@ -1,0 +1,27 @@
+@each $size, $data in $global-text-map {
+  .u-text-#{$size} {
+    @each $prop, $value in $data {
+      #{$prop}: $value;
+    }
+  }
+}
+@each $color, $value in $core-colors {
+  .u-text-#{$color} {
+    color: $value;
+  }
+}
+@each $weight, $value in $font-weights {
+  .u-font-#{$weight} {
+    font-weight: $value;
+  }
+}
+@each $transform, $value in $text-transforms {
+  .u-#{$transform} {
+    text-transform: $value;
+  }
+}
+@each $decoration, $value in $text-decorations {
+  .u-#{$decoration} {
+    text-decoration: $value;
+  }
+}

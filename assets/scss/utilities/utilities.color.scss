@@ -1,0 +1,5 @@
+@each $color, $value in $core-colors {
+  .u-bg-#{$color} {
+    background-color: $value;
+  }
+}

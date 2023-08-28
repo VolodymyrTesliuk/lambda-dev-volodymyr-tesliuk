@@ -1,0 +1,22 @@
+$base-colors: (
+  'transparent': transparent,
+  'current': currentColor,
+);
+
+$theme-colors: (
+  'bright-gray': #ebebeb,
+  'eerie-black': #1f1f1f,
+  'granite-gray': #636363,
+  'ocean-green': #42d392,
+  'blueberry': #647eff,
+);
+
+$priority-colors: (
+  'primary': map-get($theme-colors, 'bright-gray'),
+  'secondary': map-get($theme-colors, 'eerie-black'),
+  'tertiary': map-get($theme-colors, 'granite-gray'),
+  'quaternary': map-get($theme-colors, 'ocean-green'),
+  'quinary': map-get($theme-colors, 'blueberry'),
+);
+
+$core-colors: map-merge($base-colors, $priority-colors);

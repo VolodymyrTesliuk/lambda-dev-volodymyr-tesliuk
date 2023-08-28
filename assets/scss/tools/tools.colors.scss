@@ -1,0 +1,8 @@
+@function color($color) {
+  @return map-get($core-colors, $color);
+}
+
+@function color-alpha($colorName, $alpha) {
+  $color: map-get($core-colors, $colorName);
+  @return rgba(red($color), green($color), blue($color), $alpha);
+}

@@ -1,0 +1,3 @@
+@function indent($indent) {
+  @return map-get($indent-sizes, $indent);
+}
