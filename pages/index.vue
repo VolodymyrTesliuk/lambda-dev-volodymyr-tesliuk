@@ -1,12 +1,11 @@
 <script setup lang="ts">
 useHead({
-  title: 'TODO notes',
+  title: '<TodoNotes>',
 })
-const notes = useNotes()
 </script>
 
 <template>
-  <TemplatesHome :data="notes" />
+  <TemplatesHome />
 </template>
 
 <style scoped></style>

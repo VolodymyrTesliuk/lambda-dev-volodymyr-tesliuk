@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import type { NoteType } from '@/types/NoteTypes'
-const props = defineProps<{
-  notes: NoteType[]
-}>()
+import { storeToRefs } from 'pinia'
+import { useNotesStore } from '@/stores/notes'
+const store = useNotesStore()
+const { notes } = storeToRefs(store)
 </script>
 
 <template>
-  <MasonryWall
-    :items="props.notes"
-    :column-width="238"
-    :gap="16"
-    class="o-note-list"
-  >
+  <MasonryWall :items="notes" :column-width="238" :gap="16" class="o-note-list">
     <template #default="{ item }">
       <AtomsBaseTile tag="article" class="o-note-list__item">
+        <AtomsBaseButton
+          title="Remove note"
+          class="o-note-list__remove"
+          @click="store.deleteNote(item.id)"
+        />
         <AtomsBaseText
           v-if="item.title"
           tag="h3"
@@ -26,8 +26,9 @@ const props = defineProps<{
           <MoleculesTodoItem
             v-for="task in item.tasks"
             :key="task.id"
-            v-model:done="task.done"
             v-model:text="task.text"
+            :done="task.done"
+            @update:done="store.toggleTask(item.id, task.id)"
           >
           </MoleculesTodoItem>
         </ul>
@@ -39,7 +40,17 @@ const props = defineProps<{
 <style scoped lang="scss">
 .o-note-list {
   &__item {
-    padding: 12px 0 6px;
+    position: relative;
+    padding: 24px 0 6px;
+  }
+  &__remove {
+    width: 12px;
+    height: 12px;
+    background-color: color(senary);
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    border-radius: 6px;
   }
   &__title {
     padding: 0 16px 12px;

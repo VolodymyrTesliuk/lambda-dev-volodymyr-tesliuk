@@ -1,14 +1,9 @@
-<script setup lang="ts">
-import type { NoteType } from '@/types/NoteTypes'
-const props = defineProps<{
-  data: NoteType[]
-}>()
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <div class="t-home">
     <OrganismsNoteForm class="t-home__form" />
-    <OrganismsNoteList :notes="props.data" class="t-home__notes" />
+    <OrganismsNoteList class="t-home__notes" />
   </div>
 </template>
 
