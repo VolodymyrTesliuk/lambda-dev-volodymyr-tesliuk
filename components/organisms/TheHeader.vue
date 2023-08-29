@@ -3,7 +3,7 @@
 <template>
   <header class="o-header">
     <nav class="o-header__nav">
-      <MoleculesTheLogo>TODO notes</MoleculesTheLogo>
+      <MoleculesTheLogo>&lt;TodoNotes&gt;</MoleculesTheLogo>
       <AtomsBaseButton
         title="Undo last action"
         tag="button"

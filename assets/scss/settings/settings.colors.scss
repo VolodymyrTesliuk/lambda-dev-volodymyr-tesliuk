@@ -9,6 +9,7 @@ $theme-colors: (
   'granite-gray': #636363,
   'ocean-green': #42d392,
   'blueberry': #647eff,
+  'maroon': #800000,
 );
 
 $priority-colors: (
@@ -17,6 +18,7 @@ $priority-colors: (
   'tertiary': map-get($theme-colors, 'granite-gray'),
   'quaternary': map-get($theme-colors, 'ocean-green'),
   'quinary': map-get($theme-colors, 'blueberry'),
+  'senary': map-get($theme-colors, 'maroon'),
 );
 
 $core-colors: map-merge($base-colors, $priority-colors);

@@ -1,19 +1,66 @@
 <script setup lang="ts">
+import { useNotesStore } from '@/stores/notes'
+import { NoteType, TodoType } from '@/types/NoteTypes'
+const generateId = () => new Date().getTime()
 const title = ref('')
+const tasks = reactive([
+  {
+    id: generateId(),
+    done: false,
+    text: '',
+  },
+])
+const error = ref('')
+const store = useNotesStore()
+const createNote = () => {
+  error.value = ''
+  const res: NoteType = {
+    id: generateId(),
+  }
+  if (title.value) res.title = title.value
+  if (tasks.length > 1 && tasks[0].text) res.tasks = tasks.slice(0, -1)
+  if (!title.value && tasks.length === 1 && tasks[0].text === '')
+    error.value = 'The note is empty, please add some info!'
+  store.createNote(res)
+}
+watch(title, () => {
+  error.value = ''
+})
+watch(tasks, () => {
+  error.value = ''
+  if (tasks[tasks.length - 1].text !== '') {
+    tasks.push({
+      id: generateId(),
+      done: false,
+      text: '',
+    })
+  } else if (tasks.length > 1 && tasks[tasks.length - 2].text === '') {
+    tasks.pop()
+  }
+})
 </script>
 
 <template>
   <AtomsBaseTile tag="form" class="o-note-form">
     <AtomsBaseInput
-      :model-value="title"
+      v-model="title"
       placeholder="New note"
       class="o-note-form__title u-font-semibold"
       size="xl"
     />
     <ul>
-      <MoleculesTodoItem editable />
+      <MoleculesTodoItem
+        v-for="task in tasks"
+        :key="task.id"
+        v-model:done="task.done"
+        v-model:text="task.text"
+        editable
+      />
     </ul>
-    <AtomsBaseButton type="submit" class="o-note-form__button"
+    <AtomsBaseButton
+      type="submit"
+      class="o-note-form__button"
+      @click.prevent="createNote"
       ><AtomsBaseText
         tag="b"
         class="o-note-form__button-text"
@@ -23,6 +70,13 @@ const title = ref('')
         Create
       </AtomsBaseText>
     </AtomsBaseButton>
+    <AtomsBaseText
+      v-if="error"
+      tag="p"
+      class="o-note-form__error u-font-semibold"
+    >
+      {{ error }}
+    </AtomsBaseText>
   </AtomsBaseTile>
 </template>
 
@@ -58,7 +112,6 @@ const title = ref('')
       height: 100%;
       transition: background-color 0.3s;
       display: flex;
-      transform: scale(102%);
     }
     &:hover,
     &:focus {
@@ -71,6 +124,11 @@ const title = ref('')
         text-shadow: 0px 0px 8px white;
       }
     }
+  }
+  &__error {
+    text-align: center;
+    padding: 8px 16px;
+    color: lighten(color(senary), 15%);
   }
 }
 </style>

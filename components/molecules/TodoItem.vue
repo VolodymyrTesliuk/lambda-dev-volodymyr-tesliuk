@@ -10,6 +10,10 @@ const props = withDefaults(
     text: '',
   },
 )
+const classObject = computed(() => [
+  { 'm-todo-field__text--crossed-out': props.done },
+  'm-todo-field__text',
+])
 defineEmits(['update:done', 'update:text'])
 </script>
 
@@ -26,10 +30,10 @@ defineEmits(['update:done', 'update:text'])
       v-if="props.editable"
       :model-value="text"
       placeholder="List item"
-      class="m-todo-field__text"
+      :class="classObject"
       @input="$emit('update:text', ($event.target as HTMLInputElement).value)"
     />
-    <AtomsBaseText v-else tag="p" class="m-todo-field__text">
+    <AtomsBaseText v-else tag="p" :class="classObject">
       {{ props.text }}
     </AtomsBaseText>
   </li>
@@ -41,6 +45,9 @@ defineEmits(['update:done', 'update:text'])
   &__text {
     padding-left: 12px;
     flex: 1;
+    &--crossed-out {
+      text-decoration-line: line-through;
+    }
   }
 }
 </style>

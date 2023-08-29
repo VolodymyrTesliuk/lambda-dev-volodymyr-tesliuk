@@ -6,6 +6,7 @@ export type ColorTypes =
   | 'tertiary'
   | 'quaternary'
   | 'quinary'
+  | 'senary'
 export type TextSizeTypes =
   | 'xs'
   | 'sm'
