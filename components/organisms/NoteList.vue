@@ -2,9 +2,11 @@
 import { storeToRefs } from 'pinia'
 import { useNotesStore } from '@/stores/notes'
 import type { NoteOrNone } from '@/types/NoteTypes'
+type DelIdType = null | string | number
 const store = useNotesStore()
 const { notes } = storeToRefs(store)
 const note: globalThis.Ref<NoteOrNone> = ref(undefined)
+const deleteId: globalThis.Ref<DelIdType> = ref(null)
 const lockScreen = (lock: boolean) => {
   const body = document.getElementsByTagName('body')[0].style
   const html = document.documentElement.style
@@ -19,9 +21,22 @@ const lockScreen = (lock: boolean) => {
 const setNote = (data?: NoteOrNone) => {
   note.value = data ? JSON.parse(JSON.stringify(data)) : data
 }
+const confirmMessage =
+  'Are you sure you want to delete this note with all its tasks?'
 watch(note, () => {
   note ? lockScreen(true) : lockScreen(false)
 })
+const confirmDelete = (id: DelIdType) => {
+  deleteId.value = id
+}
+const closePopUp = () => {
+  if (note.value) setNote()
+  if (deleteId.value) deleteId.value = null
+}
+const deleteNote = () => {
+  if (deleteId.value) store.deleteNote(deleteId.value)
+  closePopUp()
+}
 </script>
 
 <template>
@@ -38,7 +53,7 @@ watch(note, () => {
             <AtomsBaseButton
               title="Remove note"
               class="o-note-list__remove"
-              @click.stop="store.deleteNote(item.id)"
+              @click.stop="confirmDelete(item.id)"
             />
             <AtomsBaseText
               v-if="item.title"
@@ -64,8 +79,24 @@ watch(note, () => {
     </MasonryWall>
     <teleport to="body">
       <Transition name="u-fade-in" mode="out-in">
-        <MoleculesPopUp v-if="note" @click="setNote()"
-          ><OrganismsNoteForm :data="note" @updated="setNote()" />
+        <MoleculesPopUp v-if="note || deleteId" @click="closePopUp()">
+          <OrganismsNoteForm v-if="note" :data="note" @updated="setNote()" />
+          <AtomsBaseTile
+            v-else-if="deleteId"
+            class="u-flex u-flex-col u-items-center"
+          >
+            <AtomsBaseText
+              tag="p"
+              size="lg"
+              color="primary"
+              class="o-note-list__confirm"
+            >
+              {{ confirmMessage }}
+            </AtomsBaseText>
+            <MoleculesFormButton title="Confirm delete" @click="deleteNote()">
+              Confirm
+            </MoleculesFormButton>
+          </AtomsBaseTile>
         </MoleculesPopUp>
       </Transition>
     </teleport>
@@ -89,6 +120,9 @@ watch(note, () => {
   }
   &__title {
     padding: 0 16px 12px;
+  }
+  &__confirm {
+    padding: 12px 16px 0;
   }
 }
 </style>

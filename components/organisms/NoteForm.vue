@@ -75,19 +75,9 @@ watch(tasks.value, () => {
         editable
       />
     </ul>
-    <AtomsBaseButton
-      type="submit"
-      class="o-note-form__button"
-      @click.prevent="submitNote"
-      ><AtomsBaseText
-        tag="b"
-        class="o-note-form__button-text"
-        color="primary"
-        weight="black"
-      >
-        {{ buttonText }}
-      </AtomsBaseText>
-    </AtomsBaseButton>
+    <MoleculesFormButton @click="submitNote">
+      {{ buttonText }}
+    </MoleculesFormButton>
     <AtomsBaseText
       v-if="error"
       tag="p"
