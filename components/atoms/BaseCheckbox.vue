@@ -15,7 +15,7 @@ const model = computed({
 </script>
 
 <template>
-  <label class="a-checkbox u-flex">
+  <label class="a-checkbox u-flex" @click.stop>
     <input
       v-model="model"
       :value="value"

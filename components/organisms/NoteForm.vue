@@ -8,23 +8,21 @@ const emit = defineEmits(['updated'])
 const buttonText = computed(() => (props.data ? 'Save' : 'Create'))
 const generateId = () => new Date().getTime()
 const title = ref(props.data?.title || '')
-const getNewNote = (id: number | string) => {
+const getNewNote = () => {
   return {
-    id,
+    id: generateId(),
     done: false,
     text: '',
   }
 }
 const tasks = ref(
-  props.data?.tasks
-    ? [...props.data?.tasks, getNewNote(generateId())]
-    : [getNewNote(generateId())],
+  props.data?.tasks ? [...props.data?.tasks, getNewNote()] : [getNewNote()],
 )
 const error = ref('')
 const store = useNotesStore()
 const clearForm = () => {
   title.value = ''
-  tasks.value = []
+  tasks.value = [getNewNote()]
 }
 const submitNote = () => {
   error.value = ''
@@ -50,11 +48,7 @@ watch(title, () => {
 watch(tasks.value, () => {
   error.value = ''
   if (tasks.value[tasks.value.length - 1].text !== '') {
-    tasks.value.push({
-      id: generateId(),
-      done: false,
-      text: '',
-    })
+    tasks.value.push(getNewNote())
   } else if (
     tasks.value.length > 1 &&
     tasks.value[tasks.value.length - 2].text === ''
