@@ -3,6 +3,8 @@ const props = withDefaults(
   defineProps<{
     tag?: string
     rounded?: boolean
+    focus?: boolean
+    transparent?: boolean
     size?: 'small' | 'base' | 'big'
   }>(),
   {
@@ -12,9 +14,10 @@ const props = withDefaults(
   },
 )
 const classObject = computed(() => [
+  { 'a-tile--focus': props.focus },
+  { 'a-tile--transparent': props.transparent },
   { 'a-tile--rounded': props.rounded },
-  { 'a-tile--rounded': props.rounded },
-  { [`a-tile--${props.size}`]: props.rounded },
+  { [`a-tile--${props.size}`]: props.size },
   'a-tile',
 ])
 </script>
@@ -28,7 +31,8 @@ const classObject = computed(() => [
 <style lang="scss">
 .a-tile {
   $self: &;
-  background: color('secondary');
+  background-color: color('secondary');
+  transition: box-shadow 0.3s;
   $sizes: (
     'small': (
       'size': 2px,
@@ -43,6 +47,9 @@ const classObject = computed(() => [
       'radius': 24px,
     ),
   );
+  &--transparent {
+    background-color: transparent;
+  }
   @each $size, $map in $sizes {
     $value: map-get($map, 'size');
     $radius: map-get($map, 'radius');
@@ -54,6 +61,14 @@ const classObject = computed(() => [
     }
     &--#{$size}#{$self}--rounded {
       border-radius: $radius;
+    }
+    &--#{$size}#{$self}--focus {
+      &:hover,
+      &:focus {
+        box-shadow:
+          $value $value $value * 3 lighten(color('quaternary'), 20%),
+          $-value $-value $value * 3 lighten(color('quinary'), 20%);
+      }
     }
   }
 }

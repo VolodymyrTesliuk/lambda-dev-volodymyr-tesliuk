@@ -1,47 +1,71 @@
 <script setup lang="ts">
 import { useNotesStore } from '@/stores/notes'
-import { NoteType, TodoType } from '@/types/NoteTypes'
+import { NoteType } from '@/types/NoteTypes'
+const props = defineProps<{
+  data?: NoteType
+}>()
+const emit = defineEmits(['updated'])
+const buttonText = computed(() => (props.data ? 'Save' : 'Create'))
 const generateId = () => new Date().getTime()
-const title = ref('')
-const tasks = reactive([
-  {
-    id: generateId(),
+const title = ref(props.data?.title || '')
+const getNewNote = (id: number | string) => {
+  return {
+    id,
     done: false,
     text: '',
-  },
-])
+  }
+}
+const tasks = ref(
+  props.data?.tasks
+    ? [...props.data?.tasks, getNewNote(generateId())]
+    : [getNewNote(generateId())],
+)
 const error = ref('')
 const store = useNotesStore()
-const createNote = () => {
+const clearForm = () => {
+  title.value = ''
+  tasks.value = []
+}
+const submitNote = () => {
   error.value = ''
   const res: NoteType = {
     id: generateId(),
   }
   if (title.value) res.title = title.value
-  if (tasks.length > 1 && tasks[0].text) res.tasks = tasks.slice(0, -1)
-  if (!title.value && tasks.length === 1 && tasks[0].text === '')
+  if (tasks.value.length > 1 && tasks.value[0].text)
+    res.tasks = tasks.value.slice(0, -1)
+  if (!title.value && tasks.value.length === 1 && tasks.value[0].text === '')
     error.value = 'The note is empty, please add some info!'
-  store.createNote(res)
+  if (props.data) {
+    store.updateNote(props.data.id, res)
+    emit('updated')
+  } else {
+    store.createNote(res)
+    clearForm()
+  }
 }
 watch(title, () => {
   error.value = ''
 })
-watch(tasks, () => {
+watch(tasks.value, () => {
   error.value = ''
-  if (tasks[tasks.length - 1].text !== '') {
-    tasks.push({
+  if (tasks.value[tasks.value.length - 1].text !== '') {
+    tasks.value.push({
       id: generateId(),
       done: false,
       text: '',
     })
-  } else if (tasks.length > 1 && tasks[tasks.length - 2].text === '') {
-    tasks.pop()
+  } else if (
+    tasks.value.length > 1 &&
+    tasks.value[tasks.value.length - 2].text === ''
+  ) {
+    tasks.value.pop()
   }
 })
 </script>
 
 <template>
-  <AtomsBaseTile tag="form" class="o-note-form">
+  <AtomsBaseTile tag="form" class="o-note-form" transparent>
     <AtomsBaseInput
       v-model="title"
       placeholder="New note"
@@ -60,14 +84,14 @@ watch(tasks, () => {
     <AtomsBaseButton
       type="submit"
       class="o-note-form__button"
-      @click.prevent="createNote"
+      @click.prevent="submitNote"
       ><AtomsBaseText
         tag="b"
         class="o-note-form__button-text"
         color="primary"
         weight="black"
       >
-        Create
+        {{ buttonText }}
       </AtomsBaseText>
     </AtomsBaseButton>
     <AtomsBaseText

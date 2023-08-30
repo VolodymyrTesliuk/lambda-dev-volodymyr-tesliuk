@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const isNoteOpened = ref(false)
+</script>
 
 <template>
   <div class="t-home">

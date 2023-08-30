@@ -23,10 +23,8 @@ export const useNotesStore = defineStore('notes', () => {
     notes.value = notes.value.filter((note) => note.id !== noteId)
   }
   function toggleTask(noteId: number | string, taskId: number | string) {
-    console.log(noteId, taskId)
     notes.value = notes.value.map((note) => {
       if (note.id === noteId) {
-        console.log(note)
         note.tasks = note.tasks?.map((task) =>
           task.id === taskId ? { ...task, done: !task.done } : task,
         )
