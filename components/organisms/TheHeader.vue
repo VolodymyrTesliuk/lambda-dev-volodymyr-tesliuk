@@ -1,4 +1,7 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useNotesStore } from '@/stores/notes'
+const store = useNotesStore()
+</script>
 
 <template>
   <header class="o-header">
@@ -9,6 +12,7 @@
         tag="button"
         bg="transparent"
         class="o-header__undo"
+        @click="store.undoLastAction()"
       >
         <AtomsBaseIcon icon="undo" />
       </AtomsBaseButton>
