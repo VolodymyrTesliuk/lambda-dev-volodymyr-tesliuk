@@ -32,7 +32,7 @@ export const useNotes = (): globalThis.Ref<NoteType[]> => {
       tasks: [
         {
           id: 1,
-          done: false,
+          done: true,
           text: 'Edit already existing note',
         },
         { id: 2, done: true, text: 'Delete existing node' },

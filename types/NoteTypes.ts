@@ -4,3 +4,4 @@ export type NoteType = {
   title?: string
   tasks?: TodoType[]
 }
+export type NoteOrNone = NoteType | undefined
