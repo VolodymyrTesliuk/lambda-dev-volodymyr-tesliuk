@@ -14,7 +14,13 @@ const classObject = computed(() => [
   { 'm-todo-field__text--crossed-out': props.done },
   'm-todo-field__text',
 ])
-defineEmits(['update:done', 'update:text'])
+const emit = defineEmits(['update:done', 'update:text'])
+const onCheckboxUpdate = (event: Event) => {
+  emit('update:done', /true/i.test((event.target as HTMLInputElement).value))
+}
+const onTextInputUpdate = (event: Event) => {
+  emit('update:text', (event.target as HTMLInputElement).value)
+}
 </script>
 
 <template>
@@ -22,16 +28,14 @@ defineEmits(['update:done', 'update:text'])
     <AtomsBaseCheckbox
       :value="props.done"
       :model-value="props.done"
-      @input="
-        $emit('update:done', Boolean(($event.target as HTMLInputElement).value))
-      "
+      @input="onCheckboxUpdate"
     />
     <AtomsBaseInput
       v-if="props.editable"
       :model-value="text"
       placeholder="List item"
       :class="classObject"
-      @input="$emit('update:text', ($event.target as HTMLInputElement).value)"
+      @input="onTextInputUpdate"
     />
     <AtomsBaseText v-else tag="p" :class="classObject">
       {{ props.text }}

@@ -12,8 +12,18 @@ export const useNotesStore = defineStore('notes', () => {
   )
   const lastAction: globalThis.Ref<NoteType[] | null> = ref(null)
   // GETTERS
-  const notesJson = computed(() => JSON.stringify(notes.value))
+  const encodedNotes = computed(() =>
+    encodeURIComponent(JSON.stringify(notes.value)),
+  )
   // ACTIONS
+  function addNotes(newNotes: NoteType[]) {
+    setLaseAction()
+    const ids = notes.value.map((note) => note.id)
+    const uniqNotes = copyObj(newNotes).filter(
+      (note: NoteType) => !ids.includes(note.id),
+    )
+    notes.value = [...notes.value, ...uniqNotes]
+  }
   function createNote(noteData: NoteType) {
     setLaseAction()
     if (noteData.title || noteData.tasks?.length)
@@ -52,7 +62,8 @@ export const useNotesStore = defineStore('notes', () => {
   return {
     notes: skipHydrate(notes),
     lastAction,
-    notesJson,
+    encodedNotes,
+    addNotes,
     createNote,
     updateNote,
     deleteNote,

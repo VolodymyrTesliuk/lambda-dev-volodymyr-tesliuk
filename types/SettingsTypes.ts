@@ -41,4 +41,4 @@ export type FontWeightTypes =
   | 'bold'
   | 'extrabold'
   | 'black'
-export type IconsList = 'undo'
+export type IconsList = 'export' | 'import' | 'undo'

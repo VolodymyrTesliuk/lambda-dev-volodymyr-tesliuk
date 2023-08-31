@@ -8,21 +8,22 @@ const emit = defineEmits(['updated'])
 const buttonText = computed(() => (props.data ? 'Save' : 'Create'))
 const generateId = () => new Date().getTime()
 const title = ref(props.data?.title || '')
-const getNewNote = () => {
-  return {
+const getNewTask = () =>
+  reactive({
     id: generateId(),
     done: false,
     text: '',
-  }
-}
-const tasks = ref(
-  props.data?.tasks ? [...props.data?.tasks, getNewNote()] : [getNewNote()],
-)
+  })
+const todo = reactive({
+  tasks: props.data?.tasks
+    ? [...props.data?.tasks, getNewTask()]
+    : [getNewTask()],
+})
 const error = ref('')
 const store = useNotesStore()
 const clearForm = () => {
   title.value = ''
-  tasks.value = [getNewNote()]
+  todo.tasks = [getNewTask()]
 }
 const submitNote = () => {
   error.value = ''
@@ -30,10 +31,12 @@ const submitNote = () => {
     id: generateId(),
   }
   if (title.value) res.title = title.value
-  if (tasks.value.length > 1 && tasks.value[0].text)
-    res.tasks = tasks.value.slice(0, -1)
-  if (!title.value && tasks.value.length === 1 && tasks.value[0].text === '')
+  if (todo.tasks.length > 1 && todo.tasks[0].text)
+    res.tasks = todo.tasks.slice(0, -1)
+  if (!title.value && todo.tasks.length === 1 && todo.tasks[0].text === '') {
     error.value = 'The note is empty, please add some info!'
+    return
+  }
   if (props.data) {
     store.updateNote(props.data.id, res)
     emit('updated')
@@ -45,15 +48,15 @@ const submitNote = () => {
 watch(title, () => {
   error.value = ''
 })
-watch(tasks.value, () => {
+watch(todo, () => {
   error.value = ''
-  if (tasks.value[tasks.value.length - 1].text !== '') {
-    tasks.value.push(getNewNote())
+  if (todo.tasks[todo.tasks.length - 1].text !== '') {
+    todo.tasks.push(getNewTask())
   } else if (
-    tasks.value.length > 1 &&
-    tasks.value[tasks.value.length - 2].text === ''
+    todo.tasks.length > 1 &&
+    todo.tasks[todo.tasks.length - 2].text === ''
   ) {
-    tasks.value.pop()
+    todo.tasks.pop()
   }
 })
 </script>
@@ -68,7 +71,7 @@ watch(tasks.value, () => {
     />
     <ul>
       <MoleculesTodoItem
-        v-for="task in tasks"
+        v-for="task in todo.tasks"
         :key="task.id"
         v-model:done="task.done"
         v-model:text="task.text"

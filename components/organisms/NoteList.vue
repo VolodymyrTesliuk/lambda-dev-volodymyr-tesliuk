@@ -31,10 +31,10 @@ const confirmDelete = (id: DelIdType) => {
 }
 const closePopUp = () => {
   if (note.value) setNote()
-  if (deleteId.value) deleteId.value = null
+  if (deleteId.value !== null) deleteId.value = null
 }
 const deleteNote = () => {
-  if (deleteId.value) store.deleteNote(deleteId.value)
+  if (deleteId.value !== null) store.deleteNote(deleteId.value)
   closePopUp()
 }
 </script>
@@ -79,10 +79,10 @@ const deleteNote = () => {
     </MasonryWall>
     <teleport to="body">
       <Transition name="u-fade-in" mode="out-in">
-        <MoleculesPopUp v-if="note || deleteId" @click="closePopUp()">
+        <MoleculesPopUp v-if="note || deleteId !== null" @click="closePopUp()">
           <OrganismsNoteForm v-if="note" :data="note" @updated="setNote()" />
           <AtomsBaseTile
-            v-else-if="deleteId"
+            v-else-if="deleteId !== null"
             class="u-flex u-flex-col u-items-center"
           >
             <AtomsBaseText
@@ -122,7 +122,7 @@ const deleteNote = () => {
     padding: 0 16px 12px;
   }
   &__confirm {
-    padding: 12px 16px 0;
+    padding: 16px;
   }
 }
 </style>

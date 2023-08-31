@@ -1,21 +1,10 @@
-<script setup lang="ts">
-import { useNotesStore } from '@/stores/notes'
-const store = useNotesStore()
-</script>
+<script setup lang="ts"></script>
 
 <template>
   <header class="o-header">
     <nav class="o-header__nav">
       <MoleculesTheLogo>&lt;TodoNotes&gt;</MoleculesTheLogo>
-      <AtomsBaseButton
-        title="Undo last action"
-        tag="button"
-        bg="transparent"
-        class="o-header__undo"
-        @click="store.undoLastAction()"
-      >
-        <AtomsBaseIcon icon="undo" />
-      </AtomsBaseButton>
+      <MoleculesControls />
     </nav>
   </header>
 </template>
@@ -31,11 +20,6 @@ const store = useNotesStore()
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
-  &__undo {
-    display: flex;
-    padding: 0;
-    color: color('primary');
   }
 }
 </style>
