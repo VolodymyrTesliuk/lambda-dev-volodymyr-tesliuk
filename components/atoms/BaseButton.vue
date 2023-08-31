@@ -5,6 +5,7 @@ const props = withDefaults(
     tag?:
       | 'button'
       | 'a'
+      | 'label'
       | 'input'
       | 'router-link'
       | 'nuxt-link'
@@ -20,7 +21,7 @@ const props = withDefaults(
   },
 )
 const emit = defineEmits<{
-  (type: 'click', data: Event): void
+  (type: 'click', event: Event): void
 }>()
 const classObject = computed(() => [
   { 'a-button--disabled': props.disabled },

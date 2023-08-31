@@ -42,7 +42,7 @@ export default [
     tasks: [
       {
         id: 1,
-        done: false,
+        done: true,
         text: 'Add undo last action (creating or deleting)',
       },
     ],
@@ -53,7 +53,7 @@ export default [
     tasks: [
       {
         id: 1,
-        done: false,
+        done: true,
         text: 'Create custom prompt to confirm note deleting',
       },
     ],
@@ -64,12 +64,12 @@ export default [
     tasks: [
       {
         id: 1,
-        done: false,
+        done: true,
         text: 'Export all notes as a single file and save it on device',
       },
       {
         id: 2,
-        done: false,
+        done: true,
         text: 'Import all notes from file on device that previously exported',
       },
     ],
