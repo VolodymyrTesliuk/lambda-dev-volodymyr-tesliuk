@@ -20,9 +20,9 @@ defineEmits(['click'])
     display: flex;
     height: 100%;
     justify-content: center;
-    left: 0;
+    left: indent('zero');
     position: fixed;
-    top: 0;
+    top: indent('zero');
     width: 100%;
     z-index: 1;
   }

@@ -107,22 +107,22 @@ const deleteNote = () => {
 .o-note-list {
   &__item {
     position: relative;
-    padding: 24px 0 6px;
+    padding: indent('lg') indent('zero') indent('2xs');
   }
   &__remove {
     width: 12px;
     height: 12px;
     background-color: color(senary);
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: indent('xs');
+    left: indent('xs');
     border-radius: 6px;
   }
   &__title {
-    padding: 0 16px 12px;
+    padding: indent('zero') indent('base') indent('sm');
   }
   &__confirm {
-    padding: 16px;
+    padding: indent('base');
   }
 }
 </style>

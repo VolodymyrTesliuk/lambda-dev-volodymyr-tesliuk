@@ -65,8 +65,8 @@ onUnmounted(() => {
 .m-controls {
   &__cta {
     color: color('primary');
-    margin: 0 16px;
-    padding: 2px 8px;
+    margin: indent('zero') indent('base');
+    padding: indent('4xs') indent('xs');
   }
   &__file {
     display: none;

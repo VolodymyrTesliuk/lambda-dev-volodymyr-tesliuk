@@ -14,13 +14,13 @@ const isNoteOpened = ref(false)
   align-items: center;
   display: flex;
   flex-direction: column;
-  margin: 0 32px 64px;
+  margin: indent('zero') indent('xl') indent('3xl');
   &__form {
-    margin-top: 32px;
+    margin-top: indent('xl');
   }
   &__notes {
     width: 100%;
-    margin-top: 32px;
+    margin-top: indent('xl');
   }
 }
 </style>

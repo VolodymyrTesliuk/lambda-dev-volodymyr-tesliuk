@@ -15,11 +15,11 @@ const classObject = computed(() => [
   'm-todo-field__text',
 ])
 const emit = defineEmits(['update:done', 'update:text'])
-const onCheckboxUpdate = (event: Event) => {
-  emit('update:done', /true/i.test((event.target as HTMLInputElement).value))
+const onCheckboxUpdate = (done: boolean) => {
+  emit('update:done', done)
 }
-const onTextInputUpdate = (event: Event) => {
-  emit('update:text', (event.target as HTMLInputElement).value)
+const onTextInputUpdate = (text: string) => {
+  emit('update:text', text)
 }
 </script>
 
@@ -28,14 +28,14 @@ const onTextInputUpdate = (event: Event) => {
     <AtomsBaseCheckbox
       :value="props.done"
       :model-value="props.done"
-      @input="onCheckboxUpdate"
+      @update:model-value="onCheckboxUpdate"
     />
     <AtomsBaseInput
       v-if="props.editable"
       :model-value="text"
       placeholder="List item"
       :class="classObject"
-      @input="onTextInputUpdate"
+      @update:model-value="onTextInputUpdate"
     />
     <AtomsBaseText v-else tag="p" :class="classObject">
       {{ props.text }}
@@ -45,9 +45,9 @@ const onTextInputUpdate = (event: Event) => {
 
 <style scoped lang="scss">
 .m-todo-field {
-  padding: 6px 16px;
+  padding: indent('2xs') indent('bsse');
   &__text {
-    padding-left: 12px;
+    padding-left: indent('sm');
     flex: 1;
     &--crossed-out {
       text-decoration-line: line-through;

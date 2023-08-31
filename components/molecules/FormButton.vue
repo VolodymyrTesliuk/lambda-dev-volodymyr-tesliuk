@@ -26,18 +26,18 @@ defineEmits(['click'])
     2px 2px 6px darken(color('secondary'), 20%),
     -2px -2px 6px lighten(color('secondary'), 20%);
   align-self: center;
-  padding: 0;
+  padding: indent('zero');
   background-image: linear-gradient(
     90deg,
     color('quaternary') 25%,
     color('quinary')
   );
   border-radius: 36px;
-  margin: 8px 0;
+  margin: 8px indent('zero');
   transition: box-shadow 0.3s;
   &__text {
     background-color: color('secondary');
-    padding: 8px 16px;
+    padding: indent('xs') indent('base');
     border-radius: 36px;
     width: 100%;
     height: 100%;
