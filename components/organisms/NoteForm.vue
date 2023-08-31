@@ -69,7 +69,7 @@ watch(todo, () => {
       class="o-note-form__title u-font-semibold"
       size="xl"
     />
-    <ul>
+    <ul class="o-note-form__tasks">
       <MoleculesTodoItem
         v-for="task in todo.tasks"
         :key="task.id"
@@ -99,6 +99,9 @@ watch(todo, () => {
   width: 100%;
   &__title {
     padding: indent('sm') indent('base');
+  }
+  &__tasks {
+    padding: indent('zero') indent('sm');
   }
   &__button {
     $button: &;
