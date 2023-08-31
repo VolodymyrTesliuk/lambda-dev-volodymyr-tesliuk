@@ -63,7 +63,7 @@ const deleteNote = () => {
               class="o-note-list__title"
               >{{ item.title }}</AtomsBaseText
             >
-            <ul v-if="item.tasks?.length">
+            <ul v-if="item.tasks?.length" class="o-note-list__tasks">
               <MoleculesTodoItem
                 v-for="task in item.tasks"
                 :key="task.id"
@@ -120,6 +120,9 @@ const deleteNote = () => {
   }
   &__title {
     padding: indent('zero') indent('base') indent('sm');
+  }
+  &__tasks {
+    padding: indent('zero') indent('sm');
   }
   &__confirm {
     padding: indent('base');
