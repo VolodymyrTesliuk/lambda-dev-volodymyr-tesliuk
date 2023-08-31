@@ -13,9 +13,9 @@
 .o-header {
   background-color: color('secondary');
   box-shadow: 0 20px 60px darken(color('secondary'), 8%);
-  padding: 16px 32px;
+  padding: indent('base') indent('xl');
   position: sticky;
-  top: 0;
+  top: indent('zero');
   &__nav {
     display: flex;
     align-items: center;

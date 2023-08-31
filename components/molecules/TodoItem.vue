@@ -45,9 +45,9 @@ const onTextInputUpdate = (text: string) => {
 
 <style scoped lang="scss">
 .m-todo-field {
-  padding: 6px 16px;
+  padding: indent('2xs') indent('bsse');
   &__text {
-    padding-left: 12px;
+    padding-left: indent('sm');
     flex: 1;
     &--crossed-out {
       text-decoration-line: line-through;
